@@ -1,0 +1,8 @@
+<resources>
+
+    <declare-styleable name="Webp">
+        <attr name="webp_src" format="reference" />
+        <attr name="webp_background" format="reference" />
+    </declare-styleable>
+
+</resources>

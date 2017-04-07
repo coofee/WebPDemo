@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="handlers"
+            type="com.coofee.webpdemo.imageview.FrescoImageActivity" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:context="com.coofee.webpdemo.imageview.FrescoImageActivity">
+
+        <FrameLayout style="@style/sample_layout">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/test_show_image"
+                style="@style/drawee"
+                android:onClick="@{(view) -> handlers.changeUrl(view)}" />
+
+            <TextView
+                style="@style/label"
+                android:text="show test image" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</layout>
+
