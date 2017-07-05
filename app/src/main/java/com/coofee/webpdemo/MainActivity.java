@@ -2,9 +2,13 @@ package com.coofee.webpdemo;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.coofee.webpdemo.databinding.ActivityMainBinding;
 import com.coofee.webpdemo.fresco.FrescoActivity;
@@ -31,6 +35,52 @@ public class MainActivity extends AppCompatActivity {
         mActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         mActivityMainBinding.activityMainWebpDemoList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
+        mActivityMainBinding.activityMainChangeStatusBarColor.setOnClickListener(new View.OnClickListener() {
+            int origin = -1;
+            int newBg = getResources().getColor(R.color.status_bar_bg);
+
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    Window window = getWindow();
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                    if (origin == -1) {
+                        origin = window.getStatusBarColor();
+                    }
+
+                    if (origin == window.getStatusBarColor()) {
+                        window.setStatusBarColor(newBg);
+                    } else {
+                        window.setStatusBarColor(origin);
+                    }
+                }
+            }
+        });
+
+        mActivityMainBinding.activityMainChangeStatusBarTextColor.setOnClickListener(new View.OnClickListener() {
+
+            int flagStatusBar = -1;
+            int origin = -1;
+
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    Window window = getWindow();
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+
+                    if (origin == -1) {
+                        origin = window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+                    }
+
+                    if (origin == (window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)) {
+                        flagStatusBar = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                    } else {
+                        flagStatusBar = origin;
+                    }
+                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | flagStatusBar);
+                }
+            }
+        });
 
         SingleTypeAdapter<Demo> demoSingleTypeAdapter = new SingleTypeAdapter<Demo>(this, R.layout.main_demo_list);
         demoSingleTypeAdapter.setPresenter(new DemoPresenter());

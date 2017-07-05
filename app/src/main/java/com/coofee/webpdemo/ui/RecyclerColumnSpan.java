@@ -109,6 +109,7 @@ public class RecyclerColumnSpan extends AppCompatActivity {
         private int itemViewWidth = -1;
         private int itemViewHeight = -1;
 
+        private int headerViewWidth = -1;
         private int headerViewHeight = -1;
 
         public MyAdapter(Context context, RecyclerView recyclerView) {
@@ -147,6 +148,9 @@ public class RecyclerColumnSpan extends AppCompatActivity {
                 itemViewHeight = (int) (itemViewWidth * 0.625f);
 
                 headerViewHeight = (int) (mRecyclerView.getWidth() * 0.625);
+
+//                headerViewWidth = (mRecyclerView.getWidth() - SPACE * 2);
+//                headerViewHeight = (int) (headerViewWidth * 0.625f);
             }
 
             final int layoutResId = mTypeLayout.get(viewType);
@@ -156,6 +160,7 @@ public class RecyclerColumnSpan extends AppCompatActivity {
                 layoutParams.width = itemViewWidth;
                 layoutParams.height = itemViewHeight;
             } else {
+//                layoutParams.width = headerViewWidth;
                 layoutParams.width = mRecyclerView.getWidth();
                 layoutParams.height = headerViewHeight;
             }

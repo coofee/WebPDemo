@@ -44,6 +44,7 @@ public class RecyclerViewSnapDemo extends AppCompatActivity {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2, LinearLayoutManager.HORIZONTAL, false));
         mRecyclerView.addItemDecoration(new ItemDecorationGridOffset(40));
 
         mAdapter = new RecyclerView.Adapter() {
