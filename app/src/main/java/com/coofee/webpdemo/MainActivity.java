@@ -126,8 +126,10 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final View rowSpan = getLayoutInflater().inflate(R.layout.activity_multi_item_row_span, null);
-                rowSpan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                final View rowSpan = getLayoutInflater()
+                        .inflate(R.layout.activity_multi_item_row_span, null);
+                rowSpan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams
+                        .MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
                 rowSpan.measure(0, 0);
                 rowSpan.layout(0, 0, rowSpan.getMeasuredWidth(), rowSpan.getMeasuredHeight());
 
