@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // see https://github.com/jgilfelt/SystemBarTint
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     Window window = getWindow();
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // see https://github.com/jgilfelt/SystemBarTint
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     Window window = getWindow();
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
