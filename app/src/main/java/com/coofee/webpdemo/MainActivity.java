@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -84,6 +85,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        mActivityMainBinding.activityMainCreateViewInAsyncThread.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createViewInAsyncThread();
+            }
+        });
+
         SingleTypeAdapter<Demo> demoSingleTypeAdapter = new SingleTypeAdapter<Demo>(this, R.layout.main_demo_list);
         demoSingleTypeAdapter.setPresenter(new DemoPresenter());
 
@@ -112,5 +120,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, demo.mActivityClass));
             }
         }
+    }
+
+    private void createViewInAsyncThread() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final View rowSpan = getLayoutInflater().inflate(R.layout.activity_multi_item_row_span, null);
+                rowSpan.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                rowSpan.measure(0, 0);
+                rowSpan.layout(0, 0, rowSpan.getMeasuredWidth(), rowSpan.getMeasuredHeight());
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mActivityMainBinding.activityMainViewContainer.addView(rowSpan);
+                    }
+                });
+            }
+        }).start();
     }
 }
