@@ -7,5 +7,5 @@
     <color name="failure">#ffff3333</color>
     <color name="transparent">#00000000</color>
 
-    <color name="status_bar_bg">#ffff4444</color>
+    <color name="status_bar_bg">#a8ff4444</color>
 </resources>

@@ -21,6 +21,7 @@ import com.coofee.webpdemo.ui.RecyclerColumnSpan;
 import com.coofee.webpdemo.ui.RecyclerViewMultiItem;
 import com.coofee.webpdemo.ui.RecyclerViewRowSpan;
 import com.coofee.webpdemo.ui.RecyclerViewSnapDemo;
+import com.coofee.webpdemo.utils.StatusBarUtils;
 import com.coofee.webpdemo.webview.WebViewActivity;
 import com.github.markzhai.recyclerview.SingleTypeAdapter;
 
@@ -60,27 +61,40 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mActivityMainBinding.activityMainChangeStatusBarTextColor.setOnClickListener(new View.OnClickListener() {
-
-            int flagStatusBar = -1;
-            int origin = -1;
+            String mode = "dark-content";
 
             @Override
             public void onClick(View v) {
                 // see https://github.com/jgilfelt/SystemBarTint
+                // 小米手机使用这个api无法修改状态栏字体颜色，具体修改可以参考上面的SystemBarTint。
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     Window window = getWindow();
                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
 
-                    if (origin == -1) {
-                        origin = window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+//                    if (origin == -1) {
+//                        origin = window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+//                    }
+//
+//                    if (origin == (window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)) {
+//                        flagStatusBar = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+//                    } else {
+//                        flagStatusBar = origin;
+//                    }
+//                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | flagStatusBar);
+
+                    boolean dark = "dark-content".equals(mode);
+                    if (dark) {
+                        mode = "light-content";
+                    } else {
+                        mode = "dark-content";
                     }
 
-                    if (origin == (window.getDecorView().getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN)) {
-                        flagStatusBar = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
+                    if (StatusBarUtils.miuiSetStatusBarLightMode(window, dark)) {
+                    } else if (StatusBarUtils.flymeSetStatusBarLightMode(window, dark)) {
                     } else {
-                        flagStatusBar = origin;
+                        View decorView = window.getDecorView();
+                        decorView.setSystemUiVisibility(dark ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR : 0);
                     }
-                    window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | flagStatusBar);
                 }
             }
         });
