@@ -22,6 +22,7 @@ import com.coofee.webpdemo.ui.RecyclerViewMultiItem;
 import com.coofee.webpdemo.ui.RecyclerViewRowSpan;
 import com.coofee.webpdemo.ui.RecyclerViewSnapDemo;
 import com.coofee.webpdemo.utils.StatusBarUtils;
+import com.coofee.webpdemo.utils.Utils;
 import com.coofee.webpdemo.webview.WebViewActivity;
 import com.github.markzhai.recyclerview.SingleTypeAdapter;
 
@@ -137,6 +138,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createViewInAsyncThread() {
+        Utils.getUserAgent(MainActivity.this.getApplicationContext());
+
         new Thread(new Runnable() {
             @Override
             public void run() {
