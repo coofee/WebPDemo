@@ -1,6 +1,9 @@
 package com.coofee.webpdemo.utils;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.util.Log;
 import android.webkit.WebSettings;
@@ -11,6 +14,28 @@ import android.webkit.WebView;
  */
 
 public class Utils {
+
+    public static Drawable createBackground(int background, int horizontalDividerColor, int verticalDividerColor, int dividerWidth) {
+        GradientDrawable horizontalDivider = new GradientDrawable();
+        horizontalDivider.setColor(horizontalDividerColor);
+        horizontalDivider.setShape(GradientDrawable.RECTANGLE);
+
+        GradientDrawable verticalDivider = new GradientDrawable();
+        verticalDivider.setColor(verticalDividerColor);
+        verticalDivider.setShape(GradientDrawable.RECTANGLE);
+
+        GradientDrawable bg = new GradientDrawable();
+        bg.setColor(background);
+        bg.setShape(GradientDrawable.RECTANGLE);
+
+        LayerDrawable layerDrawable = new LayerDrawable(new Drawable[]{
+                horizontalDivider, verticalDivider, bg
+        });
+        layerDrawable.setLayerInset(1, 0, dividerWidth, 0, 0);
+        layerDrawable.setLayerInset(2, 0, dividerWidth, dividerWidth, 0);
+
+        return layerDrawable;
+    }
 
     public static String getUserAgent(Context context) {
         String userAgent;

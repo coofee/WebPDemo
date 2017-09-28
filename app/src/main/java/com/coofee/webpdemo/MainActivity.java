@@ -2,10 +2,13 @@ package com.coofee.webpdemo;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -44,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+
+                createBackground();
+
                 // see https://github.com/jgilfelt/SystemBarTint
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     Window window = getWindow();
@@ -61,11 +67,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         mActivityMainBinding.activityMainChangeStatusBarTextColor.setOnClickListener(new View.OnClickListener() {
             String mode = "dark-content";
 
             @Override
             public void onClick(View v) {
+                Drawable background = mActivityMainBinding.activityMainChangeStatusBarTextColor.getBackground();
+                System.out.println(background);
+
                 // see https://github.com/jgilfelt/SystemBarTint
                 // 小米手机使用这个api无法修改状态栏字体颜色，具体修改可以参考上面的SystemBarTint。
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -127,6 +137,21 @@ public class MainActivity extends AppCompatActivity {
         mActivityMainBinding.activityMainWebpDemoList.setAdapter(demoSingleTypeAdapter);
     }
 
+    private boolean mExit = false;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (mExit) {
+                finish();
+            }
+
+            mExit = true;
+        }
+
+        return false;
+    }
+
     public class DemoPresenter implements SingleTypeAdapter.Presenter<Demo> {
 
         @Override
@@ -159,4 +184,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    private void createBackground() {
+        Drawable background = Utils.createBackground(Color.parseColor("#999999"), Color.parseColor("#3F51B5"), Color.parseColor("#FF4081"), 20);
+        mActivityMainBinding.activityMainCreateViewInAsyncThread.setBackgroundDrawable(background);
+    }
+
+
 }
